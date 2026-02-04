@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MIHSSO | Portal Registration</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #1e3a8a 0%, #064e3b 100%);
+            min-height: 100vh;
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+    <header class="w-full p-6 flex justify-between items-center bg-white/10 backdrop-blur-md border-b border-white/20">
+        <div class="flex items-center space-x-3">
+            <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-blue-900 font-bold overflow-hidden border-2 border-yellow-500">
+                <img src="logo_url_here" alt="LOGO" onerror="this.src='https://via.placeholder.com/50?text=M'">
+            </div>
+            <h1 class="text-2xl font-black text-white tracking-tighter">MIHSSO <span class="text-yellow-400 text-sm block">STUDENT PORTAL</span></h1>
+        </div>
+        <div class="hidden md:block">
+            <a href="#" class="text-white hover:text-yellow-400 transition">Already have an account? <span class="font-bold underline">Sign In</span></a>
+        </div>
+    </header>
+
+    <main class="flex-grow flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-4xl rounded-2xl shadow-2xl overflow-hidden flex flex-col md:flex-row">
+            
+            <div class="hidden md:flex md:w-1/3 bg-blue-900 p-10 flex-col justify-center text-white">
+                <h2 class="text-3xl font-bold mb-4">Welcome to MIHSSO</h2>
+                <p class="text-blue-100 mb-6 italic text-sm">Join the official portal for Mbalizi Institute of Health Sciences Students. Manage your results and stay updated.</p>
+                <div class="space-y-4 text-xs">
+                    <div class="flex items-center"><i class="fas fa-shield-alt mr-2 text-yellow-400"></i> Secure & Encrypted</div>
+                    <div class="flex items-center"><i class="fas fa-bolt mr-2 text-yellow-400"></i> Real-time Updates</div>
+                </div>
+            </div>
+
+            <form id="regForm" class="p-8 md:w-2/3 grid grid-cols-1 md:grid-cols-2 gap-4">
+                <h3 class="col-span-full text-2xl font-bold text-gray-800 border-b pb-2 mb-2">Create Student Account</h3>
+
+                <div>
+                    <label class="block text-xs font-bold text-gray-600 uppercase">Full Name</label>
+                    <input type="text" placeholder="John Doe" class="w-full p-2 border rounded mt-1 focus:ring-2 focus:ring-blue-500 outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-600 uppercase">Registration Number (NS)</label>
+                    <input type="text" placeholder="NS/MIHSSO/2024/0001" class="w-full p-2 border rounded mt-1 focus:ring-2 focus:ring-blue-500 outline-none">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-gray-600 uppercase">Course Name</label>
+                    <input type="text" placeholder="Clinical Medicine" class="w-full p-2 border rounded mt-1 focus:ring-2 focus:ring-blue-500 outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-600 uppercase">Study Year</label>
+                    <select class="w-full p-2 border rounded mt-1 focus:ring-2 focus:ring-blue-500 outline-none">
+                        <option>Year 1</option>
+                        <option>Year 2</option>
+                        <option>Year 3</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-gray-600 uppercase">WhatsApp Number</label>
+                    <input type="tel" placeholder="+255..." class="w-full p-2 border rounded mt-1 focus:ring-2 focus:ring-blue-500 outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-600 uppercase">Gender</label>
+                    <div class="mt-2 flex space-x-4">
+                        <label><input type="radio" name="gender" value="male"> Male</label>
+                        <label><input type="radio" name="gender" value="female"> Female</label>
+                    </div>
+                </div>
+
+                <div class="col-span-full">
+                    <label class="block text-xs font-bold text-gray-600 uppercase">Email Address</label>
+                    <input type="email" placeholder="student@mihsso.ac.tz" class="w-full p-2 border rounded mt-1 focus:ring-2 focus:ring-blue-500 outline-none">
+                </div>
+
+                <div class="relative">
+                    <label class="block text-xs font-bold text-gray-600 uppercase">Password</label>
+                    <input type="password" id="pass" class="w-full p-2 border rounded mt-1 pr-10 focus:ring-2 focus:ring-blue-500 outline-none">
+                    <span class="absolute right-3 top-8 cursor-pointer text-gray-400" onclick="togglePass('pass')">
+                        <i class="fas fa-eye" id="eye-pass"></i>
+                    </span>
+                    <button type="button" onclick="generatePass()" class="text-[10px] text-blue-600 font-bold mt-1">AUTO-GENERATE PASSWORD</button>
+                </div>
+                <div class="relative">
+                    <label class="block text-xs font-bold text-gray-600 uppercase">Confirm Password</label>
+                    <input type="password" id="confirm_pass" class="w-full p-2 border rounded mt-1 pr-10 focus:ring-2 focus:ring-blue-500 outline-none">
+                    <span class="absolute right-3 top-8 cursor-pointer text-gray-400" onclick="togglePass('confirm_pass')">
+                        <i class="fas fa-eye" id="eye-confirm"></i>
+                    </span>
+                </div>
+
+                <div class="col-span-full flex flex-col space-y-3 mt-2">
+                    <label class="flex items-center text-sm">
+                        <input type="checkbox" class="mr-2"> Save password for later use
+                    </label>
+                    <div class="p-3 bg-gray-100 rounded border flex items-center justify-between">
+                        <label class="text-sm font-bold flex items-center">
+                            <input type="checkbox" class="w-5 h-5 mr-3 text-green-600"> I am not a robot
+                        </label>
+                        <i class="fas fa-robot text-gray-400"></i>
+                    </div>
+                </div>
+
+                <button type="submit" class="col-span-full bg-blue-900 hover:bg-yellow-500 text-white font-black py-3 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg">
+                    REGISTER NOW
+                </button>
+            </form>
+        </div>
+    </main>
+
+    <footer class="bg-gray-900 text-white p-8 mt-10">
+        <div class="container mx-auto flex flex-col md:flex-row justify-between items-center">
+            <p class="text-sm opacity-70">© 2024 MIHSSO Portal. All Rights Reserved.</p>
+            <div class="flex space-x-6 mt-4 md:mt-0">
+                <a href="#" class="text-xl hover:text-blue-500 transition"><i class="fab fa-facebook"></i></a>
+                <a href="#" class="text-xl hover:text-pink-500 transition"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="text-xl hover:text-blue-400 transition"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="text-xl hover:text-green-500 transition"><i class="fab fa-whatsapp"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function togglePass(id) {
+            const field = document.getElementById(id);
+            field.type === "password" ? field.type = "text" : field.type = "password";
+        }
+
+        function generatePass() {
+            const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*";
+            let pass = "";
+            for (let i = 0; i < 12; i++) {
+                pass += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            document.getElementById('pass').value = pass;
+            document.getElementById('confirm_pass').value = pass;
+            alert("Generated Password: " + pass + " (Please copy it)");
+        }
+    </script>
+</body>
+</html>
