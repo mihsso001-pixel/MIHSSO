@@ -32,7 +32,6 @@
             box-shadow: 0 10px 15px -3px rgba(30, 58, 138, 0.3);
         }
 
-        /* Canvas Captcha Styling */
         #captchaCanvas {
             background: #f1f5f9;
             border-radius: 12px;
@@ -116,175 +115,132 @@
                                 <label class="flex-1 text-center font-bold text-gray-600"><input type="radio" name="gender" value="Female"> Female</label>
                             </div>
                         </div>
-                        
                         <div class="relative space-y-1">
                             <label class="text-[11px] font-black text-gray-400 uppercase ml-1">Password</label>
                             <input type="password" id="pass" class="input-pro w-full p-4 rounded-xl bg-gray-50 outline-none font-bold" required>
                             <i class="fas fa-eye absolute right-4 top-10 text-gray-300 cursor-pointer" onclick="togglePass('pass')"></i>
-                            <button type="button" onclick="generatePass()" class="text-[10px] font-black text-blue-700 mt-2 block hover:underline">AUTO-GENERATE STRONG PASSWORD</button>
+                            <button type="button" onclick="generatePass()" class="text-[10px] font-black text-blue-700 mt-2 block hover:underline">AUTO-GENERATE PASSWORD</button>
                         </div>
                         <div class="relative space-y-1">
                             <label class="text-[11px] font-black text-gray-400 uppercase ml-1">Confirm</label>
                             <input type="password" id="confirmPass" class="input-pro w-full p-4 rounded-xl bg-gray-50 outline-none font-bold" required>
-                            <i class="fas fa-eye absolute right-4 top-10 text-gray-300 cursor-pointer" onclick="togglePass('confirmPass')"></i>
                         </div>
                     </div>
 
                     <div class="bg-blue-50/50 p-6 rounded-[2rem] border-2 border-blue-100 flex flex-col items-center space-y-4">
-                        <p class="text-[10px] font-black text-blue-900 uppercase tracking-widest">Anti-Bot Verification</p>
-                        <div class="flex flex-col md:flex-row items-center gap-4">
-                            <canvas id="captchaCanvas" width="200" height="70" onclick="initCaptcha()"></canvas>
-                            <input type="text" id="captcha-input" placeholder="Type letters above" class="p-4 rounded-2xl border-2 border-blue-200 outline-none focus:border-blue-900 font-black text-center text-xl uppercase w-48 shadow-inner">
-                        </div>
-                        <p class="text-[9px] text-blue-400 italic">Click the box to change code</p>
+                        <canvas id="captchaCanvas" width="200" height="70" onclick="initCaptcha()"></canvas>
+                        <input type="text" id="captcha-input" placeholder="Type letters" class="p-4 rounded-2xl border-2 border-blue-200 outline-none focus:border-blue-900 font-black text-center text-xl uppercase w-48 shadow-inner">
                     </div>
 
                     <div class="flex flex-col space-y-4 pt-4">
-                        <label class="flex items-center text-xs font-black text-gray-400">
-                            <input type="checkbox" id="saveSession" class="mr-3 w-5 h-5 rounded-lg border-gray-300 text-blue-900 focus:ring-blue-900"> 
-                            SAVE CREDENTIALS FOR LATER USE
-                        </label>
-                        <button type="submit" class="w-full bg-blue-900 text-white py-5 rounded-[1.5rem] font-black text-xl shadow-2xl hover:bg-yellow-500 hover:text-blue-900 transition-all transform active:scale-95 uppercase tracking-tighter">
+                        <button type="submit" class="w-full bg-blue-900 text-white py-5 rounded-[1.5rem] font-black text-xl shadow-2xl hover:bg-yellow-500 hover:text-blue-900 transition-all transform active:scale-95 uppercase">
                             Finalize Registration
                         </button>
+                        <p class="text-center text-sm font-bold text-gray-500">Already have an account? <a href="#" onclick="alert('Redirecting to Sign In Page...')" class="text-blue-900 underline">Sign In Here</a></p>
                     </div>
                 </form>
 
                 <form id="staffLoginForm" class="hidden max-w-md mx-auto py-10 space-y-6">
                     <div class="text-center">
                         <h2 class="text-3xl font-black text-blue-900">Staff Secure</h2>
-                        <p class="text-sm font-bold text-gray-400 italic">Administrative verification required</p>
+                        <p class="text-sm font-bold text-gray-400 italic">Admin Verification</p>
                     </div>
-                    <input type="text" id="staffId" placeholder="Staff ID / Email" class="input-pro w-full p-5 rounded-2xl bg-gray-50 outline-none font-bold">
+                    <input type="email" id="staffEmail" placeholder="Official Email Address" class="input-pro w-full p-5 rounded-2xl bg-gray-50 outline-none font-bold" required>
                     <div class="relative">
-                        <input type="password" id="staffPass" placeholder="Password" class="input-pro w-full p-5 rounded-2xl bg-gray-50 outline-none font-bold">
+                        <input type="password" id="staffPass" placeholder="Password" class="input-pro w-full p-5 rounded-2xl bg-gray-50 outline-none font-bold" required>
                         <i class="fas fa-eye absolute right-5 top-6 text-gray-300 cursor-pointer" onclick="togglePass('staffPass')"></i>
                     </div>
-                    <button type="submit" class="w-full bg-blue-900 text-white py-5 rounded-2xl font-black text-xl shadow-xl hover:bg-green-600 transition-all uppercase">Verify Staff Identity</button>
+                    <div class="flex justify-between px-2">
+                        <label class="text-xs font-bold text-gray-400"><input type="checkbox" class="mr-1"> Remember Me</label>
+                        <a href="#" onclick="alert('Contact the System Administrator to reset your password.')" class="text-xs font-bold text-blue-900 underline">Forgot Password?</a>
+                    </div>
+                    <button type="submit" class="w-full bg-blue-900 text-white py-5 rounded-2xl font-black text-xl shadow-xl hover:bg-green-600 transition-all uppercase">Verify & Login to Dashboard</button>
                 </form>
             </div>
         </div>
     </main>
 
-    <footer class="text-center p-10 text-gray-500">
-        <p class="text-[10px] font-black tracking-[0.4em] uppercase mb-4 text-white/40">© 2026 MIHSSO OFFICIAL SYSTEM</p>
-        <div class="flex justify-center space-x-6 text-xl">
-            <i class="fab fa-instagram cursor-pointer hover:text-white transition"></i>
-            <i class="fab fa-facebook cursor-pointer hover:text-white transition"></i>
-            <i class="fab fa-whatsapp cursor-pointer hover:text-white transition"></i>
-        </div>
-    </footer>
-
     <script>
-        // --- Supabase Config ---
         const _supabase = supabase.createClient('https://wojyjgcbrssfiuejhkea.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndvanlqZ2NicnNzZml1ZWpoa2VhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njk3ODk0NTksImV4cCI6MjA4NTM2NTQ1OX0.R441lgMPFSN1xE3Gzvyn1dpeguzsm_VhaB_T9a_tAsw');
 
-        // --- Hardcore Captcha Engine ---
         let captchaText = "";
         function initCaptcha() {
             const canvas = document.getElementById('captchaCanvas');
             const ctx = canvas.getContext('2d');
             const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
             captchaText = "";
-            
-            // Clear and Background
             ctx.fillStyle = "#f1f5f9";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            // Add Noise Lines (Zinazuia AI kusoma herufi)
             for(let i=0; i<15; i++) {
-                ctx.strokeStyle = `rgba(${Math.random()*255},${Math.random()*255},${Math.random()*255},0.3)`;
-                ctx.beginPath();
-                ctx.moveTo(Math.random()*canvas.width, Math.random()*canvas.height);
-                ctx.lineTo(Math.random()*canvas.width, Math.random()*canvas.height);
-                ctx.stroke();
+                ctx.strokeStyle = `rgba(0,0,0,0.1)`;
+                ctx.beginPath(); ctx.moveTo(Math.random()*200, Math.random()*70); ctx.lineTo(Math.random()*200, Math.random()*70); ctx.stroke();
             }
-
-            // Generate Text
             ctx.font = "bold 32px 'Courier New'";
             for(let i=0; i<6; i++) {
                 const char = chars.charAt(Math.floor(Math.random() * chars.length));
-                captchaText += char;
-                ctx.save();
-                ctx.translate(30 + i*25, 45);
-                ctx.rotate((Math.random() - 0.5) * 0.4); // Tikisa herufi kidogo
-                ctx.fillStyle = "#1e3a8a";
-                ctx.fillText(char, 0, 0);
-                ctx.restore();
+                captchaText += char; ctx.fillStyle = "#1e3a8a"; ctx.fillText(char, 30 + i*25, 45);
             }
-            document.getElementById('captcha-input').value = "";
         }
 
-        // --- UI Logic ---
         function toggleView(type) {
-            const sForm = document.getElementById('studentRegisterForm');
-            const stForm = document.getElementById('staffLoginForm');
-            const sTab = document.getElementById('tab-student');
-            const stTab = document.getElementById('tab-staff');
-
-            if(type === 'student') {
-                sForm.classList.remove('hidden'); stForm.classList.add('hidden');
-                sTab.classList.add('active'); stTab.classList.remove('active');
-                stTab.classList.add('text-gray-500');
-            } else {
-                sForm.classList.add('hidden'); stForm.classList.remove('hidden');
-                stTab.classList.add('active'); sTab.classList.remove('active');
-                sTab.classList.add('text-gray-500');
-            }
+            document.getElementById('studentRegisterForm').classList.toggle('hidden', type !== 'student');
+            document.getElementById('staffLoginForm').classList.toggle('hidden', type !== 'staff');
+            document.getElementById('tab-student').classList.toggle('active', type === 'student');
+            document.getElementById('tab-staff').classList.toggle('active', type === 'staff');
         }
 
-        function togglePass(id) {
-            const el = document.getElementById(id);
-            el.type = el.type === 'password' ? 'text' : 'password';
-        }
+        function togglePass(id) { document.getElementById(id).type = document.getElementById(id).type === 'password' ? 'text' : 'password'; }
 
         function generatePass() {
-            const p = Math.random().toString(36).slice(-8).toUpperCase() + "!" + Math.floor(Math.random()*99);
-            document.getElementById('pass').value = p;
-            document.getElementById('confirmPass').value = p;
-            alert("SECURE PASSWORD: " + p + " (COPY IT!)");
+            const p = Math.random().toString(36).slice(-8).toUpperCase() + "!";
+            document.getElementById('pass').value = p; document.getElementById('confirmPass').value = p;
+            alert("PASSWORD: " + p);
         }
 
-        // --- Submission Logic ---
+        // STUDENT REGISTRATION
         document.getElementById('studentRegisterForm').onsubmit = async (e) => {
             e.preventDefault();
+            if(document.getElementById('captcha-input').value.toUpperCase() !== captchaText) { alert("Captcha Wrong!"); return; }
             
-            if(document.getElementById('captcha-input').value.toUpperCase() !== captchaText) {
-                alert("ROBOT DETECTED: Captcha code is incorrect!");
-                initCaptcha();
-                return;
-            }
-
-            if(document.getElementById('pass').value !== document.getElementById('confirmPass').value) {
-                alert("Passwords do not match!");
-                return;
-            }
-
             const email = document.getElementById('email').value;
             const password = document.getElementById('pass').value;
 
-            // Supabase Auth
             const { data, error } = await _supabase.auth.signUp({
-                email: email,
-                password: password,
+                email: email, password: password,
                 options: { data: { full_name: document.getElementById('fullName').value } }
             });
 
-            if(error) {
-                alert("Auth Error: " + error.message);
-            } else {
-                // Insert Profile
-                const { error: dbErr } = await _supabase.from('students_profile').insert([{
-                    id: data.user.id,
-                    full_name: document.getElementById('fullName').value,
-                    ns_number: document.getElementById('regNumber').value,
-                    course_name: document.getElementById('course').value,
-                    whatsapp_number: document.getElementById('whatsapp').value,
-                    gender: document.querySelector('input[name="gender"]:checked').value
+            if(error) alert(error.message);
+            else {
+                await _supabase.from('students_profile').insert([{
+                    id: data.user.id, full_name: document.getElementById('fullName').value,
+                    ns_number: document.getElementById('regNumber').value, course_name: document.getElementById('course').value,
+                    whatsapp_number: document.getElementById('whatsapp').value, gender: document.querySelector('input[name="gender"]:checked').value
                 }]);
+                alert("Usajili Umekamilika! Sasa login uingie kwenye portal.");
+                location.reload(); // Inarudisha kwenye ukurasa wa Sign In
+            }
+        };
 
-                if(dbErr) alert("Database Error: " + dbErr.message);
-                else alert("REGISTRATION SUCCESSFUL! Redirecting to dashboard...");
+        // STAFF LOGIN
+        document.getElementById('staffLoginForm').onsubmit = async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('staffEmail').value;
+            const password = document.getElementById('staffPass').value;
+
+            const { data, error } = await _supabase.auth.signInWithPassword({ email, password });
+
+            if(error) alert("Mwajiriwa: " + error.message);
+            else {
+                // Check if they are actually staff
+                const { data: profile } = await _supabase.from('staff_profile').select('user_type').eq('id', data.user.id).single();
+                if(profile && profile.user_type === 'staff') {
+                    alert("Verification Successful! Welcome Dr./Mr./Ms.");
+                    window.location.href = "staff-dashboard.html"; // Redirect ya staff
+                } else {
+                    alert("Unauthorized Access!");
+                    await _supabase.auth.signOut();
+                }
             }
         };
 
