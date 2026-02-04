@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MIHSSO | Official Student & Staff Portal</title>
+    <title>MIHSSO | Official Institution Portal</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -14,270 +14,281 @@
         
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background: radial-gradient(circle at top left, #1e3a8a, #0f172a);
+            background: #0f172a;
+            background-image: radial-gradient(at 0% 0%, hsla(225,39%,30%,1) 0, transparent 50%), 
+                              radial-gradient(at 50% 0%, hsla(225,39%,20%,1) 0, transparent 50%);
             min-height: 100vh;
         }
 
         .glass-card {
             background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .tab-btn {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            border-bottom: 3px solid transparent;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
         }
 
         .tab-btn.active {
-            border-bottom: 3px solid #eab308;
-            color: #1e3a8a;
-            font-weight: 800;
+            background: #1e3a8a;
+            color: white;
+            box-shadow: 0 10px 15px -3px rgba(30, 58, 138, 0.3);
         }
 
-        .input-field {
-            border-bottom: 2px solid #e2e8f0;
-            transition: border-color 0.3s;
+        /* Canvas Captcha Styling */
+        #captchaCanvas {
+            background: #f1f5f9;
+            border-radius: 12px;
+            cursor: pointer;
+            border: 2px solid #e2e8f0;
         }
 
-        .input-field:focus {
+        .input-pro {
+            border: 2px solid #f1f5f9;
+            transition: all 0.3s;
+        }
+
+        .input-pro:focus {
             border-color: #1e3a8a;
-            outline: none;
-        }
-
-        #captcha-display {
-            background: repeating-linear-gradient(45deg, #0f172a, #1e3a8a 100px);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-family: 'Monaco', monospace;
-            letter-spacing: 8px;
+            background: white;
+            transform: translateY(-1px);
         }
     </style>
 </head>
 <body class="p-0 m-0">
 
-    <nav class="bg-white/95 sticky top-0 z-50 shadow-sm border-b border-gray-100">
-        <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+    <nav class="p-6">
+        <div class="container mx-auto flex justify-between items-center">
             <div class="flex items-center space-x-4">
-                <div class="w-12 h-12 bg-blue-900 rounded-xl flex items-center justify-center shadow-lg border-2 border-yellow-400">
-                    <span class="text-white font-black text-xl">M</span>
+                <div class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center shadow-2xl border-2 border-blue-900">
+                    <span class="text-blue-900 font-black text-3xl">M</span>
                 </div>
                 <div>
-                    <h1 class="text-2xl font-extrabold text-blue-900 tracking-tighter">MIHSSO</h1>
-                    <p class="text-[9px] font-bold text-gray-400 uppercase tracking-[0.2em]">Mbalizi Institute of Health Sciences</p>
+                    <h1 class="text-3xl font-black text-white tracking-tighter leading-none">MIHSSO</h1>
+                    <p class="text-[10px] font-bold text-blue-300 uppercase tracking-[0.3em]">Official Student Portal</p>
                 </div>
-            </div>
-            <div class="hidden md:flex items-center space-x-6">
-                <a href="#" class="text-sm font-bold text-gray-500 hover:text-blue-900">ACADEMIC CALENDAR</a>
-                <a href="#" class="bg-blue-900 text-white px-5 py-2 rounded-lg text-sm font-bold hover:bg-yellow-500 transition">SUPPORT</a>
             </div>
         </div>
     </nav>
 
-    <main class="container mx-auto py-12 px-4">
-        <div class="max-w-4xl mx-auto glass-card rounded-[2.5rem] shadow-2xl overflow-hidden">
+    <main class="container mx-auto py-6 px-4">
+        <div class="max-w-4xl mx-auto glass-card rounded-[3rem] shadow-2xl overflow-hidden">
             
-            <div class="flex bg-gray-50/50">
-                <button onclick="toggleView('student')" id="tab-student" class="tab-btn active flex-1 py-6 text-sm uppercase tracking-widest">Student Portal</button>
-                <button onclick="toggleView('staff')" id="tab-staff" class="tab-btn flex-1 py-6 text-sm uppercase tracking-widest text-gray-400">Staff Secure Login</button>
+            <div class="p-4 bg-gray-100/50 flex space-x-2">
+                <button onclick="toggleView('student')" id="tab-student" class="tab-btn active flex-1 py-4 rounded-2xl text-xs font-black uppercase tracking-widest transition-all">
+                    <i class="fas fa-user-graduate mr-2"></i> Student Registration
+                </button>
+                <button onclick="toggleView('staff')" id="tab-staff" class="tab-btn flex-1 py-4 rounded-2xl text-xs font-black uppercase tracking-widest text-gray-500 transition-all">
+                    <i class="fas fa-user-tie mr-2"></i> Staff Secure Login
+                </button>
             </div>
 
             <div class="p-8 md:p-12">
                 <form id="studentRegisterForm" class="space-y-6">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div>
-                            <label class="block text-[10px] font-black text-blue-900 uppercase mb-1">Full Name</label>
-                            <input type="text" id="fullName" placeholder="Enter Official Name" class="input-field w-full py-2 bg-transparent" required>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="space-y-1">
+                            <label class="text-[11px] font-black text-gray-400 uppercase ml-1">Full Name</label>
+                            <input type="text" id="fullName" placeholder="As per NECTA/Admission" class="input-pro w-full p-4 rounded-xl bg-gray-50 outline-none font-semibold text-gray-700" required>
                         </div>
-                        <div>
-                            <label class="block text-[10px] font-black text-blue-900 uppercase mb-1">Registration Number</label>
-                            <input type="text" id="regNumber" placeholder="NS/MIHSSO/2026/XXXX" class="input-field w-full py-2 bg-transparent" required>
+                        <div class="space-y-1">
+                            <label class="text-[11px] font-black text-gray-400 uppercase ml-1">Reg Number (NS)</label>
+                            <input type="text" id="regNumber" placeholder="NS/MIHSSO/2026/0000" class="input-pro w-full p-4 rounded-xl bg-gray-50 outline-none font-semibold text-gray-700" required>
                         </div>
-                        <div>
-                            <label class="block text-[10px] font-black text-blue-900 uppercase mb-1">Course of Study</label>
-                            <select id="course" class="input-field w-full py-2 bg-transparent font-semibold text-gray-700" required>
-                                <option value="">Select your course</option>
-                                <option>Diploma in Clinical Medicine</option>
-                                <option>Diploma in Nursing and Midwifery</option>
-                                <option>Diploma in Medical Laboratory</option>
-                                <option>Diploma in Pharmaceutical Sciences</option>
+                        <div class="space-y-1">
+                            <label class="text-[11px] font-black text-gray-400 uppercase ml-1">Course</label>
+                            <select id="course" class="input-pro w-full p-4 rounded-xl bg-gray-50 outline-none font-semibold text-gray-700" required>
+                                <option value="">- Select Academic Program -</option>
+                                <option>Clinical Medicine</option>
+                                <option>Nursing and Midwifery</option>
+                                <option>Medical Laboratory</option>
+                                <option>Pharmaceutical Sciences</option>
                             </select>
                         </div>
-                        <div>
-                            <label class="block text-[10px] font-black text-blue-900 uppercase mb-1">WhatsApp Number</label>
-                            <input type="tel" id="whatsapp" placeholder="+255 700 000 000" class="input-field w-full py-2 bg-transparent" required>
+                        <div class="space-y-1">
+                            <label class="text-[11px] font-black text-gray-400 uppercase ml-1">WhatsApp No.</label>
+                            <input type="tel" id="whatsapp" placeholder="07xxxxxxxx" class="input-pro w-full p-4 rounded-xl bg-gray-50 outline-none font-semibold text-gray-700" required>
                         </div>
-                        <div>
-                            <label class="block text-[10px] font-black text-blue-900 uppercase mb-1">Gender</label>
-                            <div class="flex space-x-6 mt-2">
-                                <label class="flex items-center text-sm font-bold text-gray-600"><input type="radio" name="gender" value="Male" class="mr-2 w-4 h-4"> Male</label>
-                                <label class="flex items-center text-sm font-bold text-gray-600"><input type="radio" name="gender" value="Female" class="mr-2 w-4 h-4"> Female</label>
+                        <div class="space-y-1">
+                            <label class="text-[11px] font-black text-gray-400 uppercase ml-1">Email</label>
+                            <input type="email" id="email" placeholder="active-email@example.com" class="input-pro w-full p-4 rounded-xl bg-gray-50 outline-none font-semibold text-gray-700" required>
+                        </div>
+                        <div class="space-y-1">
+                            <label class="text-[11px] font-black text-gray-400 uppercase ml-1">Gender</label>
+                            <div class="flex space-x-4 p-3 bg-gray-50 rounded-xl">
+                                <label class="flex-1 text-center font-bold text-gray-600"><input type="radio" name="gender" value="Male" required> Male</label>
+                                <label class="flex-1 text-center font-bold text-gray-600"><input type="radio" name="gender" value="Female"> Female</label>
                             </div>
                         </div>
-                        <div>
-                            <label class="block text-[10px] font-black text-blue-900 uppercase mb-1">Email Address</label>
-                            <input type="email" id="email" placeholder="student@mihsso.ac.tz" class="input-field w-full py-2 bg-transparent" required>
-                        </div>
                         
-                        <div class="relative">
-                            <label class="block text-[10px] font-black text-blue-900 uppercase mb-1">Create Password</label>
-                            <input type="password" id="pass" class="input-field w-full py-2 bg-transparent" required>
-                            <i class="fas fa-eye absolute right-2 top-8 text-gray-400 cursor-pointer" onclick="togglePass('pass')"></i>
-                            <button type="button" onclick="generatePass()" class="text-[9px] font-black text-blue-600 mt-2 underline italic uppercase">Auto-Generate Secure Password</button>
+                        <div class="relative space-y-1">
+                            <label class="text-[11px] font-black text-gray-400 uppercase ml-1">Password</label>
+                            <input type="password" id="pass" class="input-pro w-full p-4 rounded-xl bg-gray-50 outline-none font-bold" required>
+                            <i class="fas fa-eye absolute right-4 top-10 text-gray-300 cursor-pointer" onclick="togglePass('pass')"></i>
+                            <button type="button" onclick="generatePass()" class="text-[10px] font-black text-blue-700 mt-2 block hover:underline">AUTO-GENERATE STRONG PASSWORD</button>
                         </div>
-                        <div class="relative">
-                            <label class="block text-[10px] font-black text-blue-900 uppercase mb-1">Confirm Password</label>
-                            <input type="password" id="confirmPass" class="input-field w-full py-2 bg-transparent" required>
-                            <i class="fas fa-eye absolute right-2 top-8 text-gray-400 cursor-pointer" onclick="togglePass('confirmPass')"></i>
-                        </div>
-                    </div>
-
-                    <div class="bg-gray-50 p-6 rounded-2xl border-2 border-dashed border-gray-200 flex flex-col md:flex-row items-center justify-between">
-                        <div class="flex items-center space-x-4">
-                            <div id="captcha-display" class="text-3xl font-black italic select-none">XXXXXX</div>
-                            <button type="button" onclick="makeCaptcha()" class="text-blue-900 hover:rotate-180 transition-all duration-500"><i class="fas fa-sync-alt"></i></button>
-                        </div>
-                        <div class="mt-4 md:mt-0 w-full md:w-auto">
-                            <input type="text" id="captcha-input" placeholder="Enter Captcha Code" class="w-full px-4 py-3 rounded-xl border-2 border-white focus:border-blue-900 outline-none shadow-sm font-bold text-center">
+                        <div class="relative space-y-1">
+                            <label class="text-[11px] font-black text-gray-400 uppercase ml-1">Confirm</label>
+                            <input type="password" id="confirmPass" class="input-pro w-full p-4 rounded-xl bg-gray-50 outline-none font-bold" required>
+                            <i class="fas fa-eye absolute right-4 top-10 text-gray-300 cursor-pointer" onclick="togglePass('confirmPass')"></i>
                         </div>
                     </div>
 
-                    <div class="flex flex-col space-y-4">
-                        <label class="flex items-center text-xs font-bold text-gray-500">
-                            <input type="checkbox" id="saveSession" class="mr-2 w-4 h-4 rounded text-blue-900"> SAVE PASSWORD FOR LATER USE
+                    <div class="bg-blue-50/50 p-6 rounded-[2rem] border-2 border-blue-100 flex flex-col items-center space-y-4">
+                        <p class="text-[10px] font-black text-blue-900 uppercase tracking-widest">Anti-Bot Verification</p>
+                        <div class="flex flex-col md:flex-row items-center gap-4">
+                            <canvas id="captchaCanvas" width="200" height="70" onclick="initCaptcha()"></canvas>
+                            <input type="text" id="captcha-input" placeholder="Type letters above" class="p-4 rounded-2xl border-2 border-blue-200 outline-none focus:border-blue-900 font-black text-center text-xl uppercase w-48 shadow-inner">
+                        </div>
+                        <p class="text-[9px] text-blue-400 italic">Click the box to change code</p>
+                    </div>
+
+                    <div class="flex flex-col space-y-4 pt-4">
+                        <label class="flex items-center text-xs font-black text-gray-400">
+                            <input type="checkbox" id="saveSession" class="mr-3 w-5 h-5 rounded-lg border-gray-300 text-blue-900 focus:ring-blue-900"> 
+                            SAVE CREDENTIALS FOR LATER USE
                         </label>
-                        <button type="submit" class="w-full bg-blue-900 text-white py-5 rounded-2xl font-black text-lg shadow-xl hover:bg-yellow-500 hover:text-blue-900 transition-all transform active:scale-95">REGISTER STUDENT ACCOUNT</button>
+                        <button type="submit" class="w-full bg-blue-900 text-white py-5 rounded-[1.5rem] font-black text-xl shadow-2xl hover:bg-yellow-500 hover:text-blue-900 transition-all transform active:scale-95 uppercase tracking-tighter">
+                            Finalize Registration
+                        </button>
                     </div>
-                    
-                    <p class="text-center text-sm font-bold text-gray-400">Already have an account? <a href="#" class="text-blue-900 underline">Sign In Here</a></p>
                 </form>
 
-                <form id="staffLoginForm" class="hidden max-w-md mx-auto py-12 space-y-8">
+                <form id="staffLoginForm" class="hidden max-w-md mx-auto py-10 space-y-6">
                     <div class="text-center">
-                        <h3 class="text-2xl font-black text-blue-900">Staff Portal</h3>
-                        <p class="text-sm text-gray-400 font-medium italic">Enter your administrative credentials</p>
+                        <h2 class="text-3xl font-black text-blue-900">Staff Secure</h2>
+                        <p class="text-sm font-bold text-gray-400 italic">Administrative verification required</p>
                     </div>
-                    <div>
-                        <label class="block text-[10px] font-black text-blue-900 uppercase mb-1">Staff Identity / Email</label>
-                        <input type="text" id="staffId" placeholder="ID Number" class="input-field w-full py-3 bg-transparent text-lg">
-                    </div>
+                    <input type="text" id="staffId" placeholder="Staff ID / Email" class="input-pro w-full p-5 rounded-2xl bg-gray-50 outline-none font-bold">
                     <div class="relative">
-                        <label class="block text-[10px] font-black text-blue-900 uppercase mb-1">Security Password</label>
-                        <input type="password" id="staffPass" class="input-field w-full py-3 bg-transparent text-lg">
-                        <i class="fas fa-eye absolute right-2 top-10 text-gray-400 cursor-pointer" onclick="togglePass('staffPass')"></i>
+                        <input type="password" id="staffPass" placeholder="Password" class="input-pro w-full p-5 rounded-2xl bg-gray-50 outline-none font-bold">
+                        <i class="fas fa-eye absolute right-5 top-6 text-gray-300 cursor-pointer" onclick="togglePass('staffPass')"></i>
                     </div>
-                    <button type="submit" class="w-full bg-blue-900 text-white py-5 rounded-2xl font-black text-lg shadow-xl hover:bg-green-600 transition-all uppercase tracking-widest">Verify & Enter Dashboard</button>
+                    <button type="submit" class="w-full bg-blue-900 text-white py-5 rounded-2xl font-black text-xl shadow-xl hover:bg-green-600 transition-all uppercase">Verify Staff Identity</button>
                 </form>
             </div>
         </div>
     </main>
 
-    <footer class="container mx-auto py-12 px-6">
-        <div class="flex flex-col md:flex-row justify-between items-center border-t border-white/10 pt-8">
-            <p class="text-white/50 text-xs font-bold tracking-widest uppercase">© 2026 MIHSSO Official Portal. Mbalizi, Mbeya.</p>
-            <div class="flex space-x-6 mt-6 md:mt-0">
-                <a href="#" class="text-white/40 hover:text-white text-xl transition"><i class="fab fa-instagram"></i></a>
-                <a href="#" class="text-white/40 hover:text-white text-xl transition"><i class="fab fa-facebook"></i></a>
-                <a href="#" class="text-white/40 hover:text-white text-xl transition"><i class="fab fa-whatsapp"></i></a>
-            </div>
+    <footer class="text-center p-10 text-gray-500">
+        <p class="text-[10px] font-black tracking-[0.4em] uppercase mb-4 text-white/40">© 2026 MIHSSO OFFICIAL SYSTEM</p>
+        <div class="flex justify-center space-x-6 text-xl">
+            <i class="fab fa-instagram cursor-pointer hover:text-white transition"></i>
+            <i class="fab fa-facebook cursor-pointer hover:text-white transition"></i>
+            <i class="fab fa-whatsapp cursor-pointer hover:text-white transition"></i>
         </div>
     </footer>
 
     <script>
-        // --- Supabase Init ---
-        const _supabase = supabase.createClient('https://wojyjgcbrssfiuejhkea.supabase.co', 'Sb_publishable_QLeXm__MXMdEp2QuguVZ6g_6C2dNdJF');
+        // --- Supabase Config ---
+        const _supabase = supabase.createClient('https://wojyjgcbrssfiuejhkea.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndvanlqZ2NicnNzZml1ZWpoa2VhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njk3ODk0NTksImV4cCI6MjA4NTM2NTQ1OX0.R441lgMPFSN1xE3Gzvyn1dpeguzsm_VhaB_T9a_tAsw');
 
-        // --- View Controller ---
-        function toggleView(type) {
-            const studentForm = document.getElementById('studentRegisterForm');
-            const staffForm = document.getElementById('staffLoginForm');
-            const tabStudent = document.getElementById('tab-student');
-            const tabStaff = document.getElementById('tab-staff');
-
-            if(type === 'student') {
-                studentForm.classList.remove('hidden'); staffForm.classList.add('hidden');
-                tabStudent.classList.add('active'); tabStaff.classList.remove('active');
-                tabStaff.classList.add('text-gray-400');
-            } else {
-                studentForm.classList.add('hidden'); staffForm.classList.remove('hidden');
-                tabStaff.classList.add('active'); tabStudent.classList.remove('active');
-                tabStudent.classList.add('text-gray-400');
-            }
-        }
-
-        // --- Security Features ---
-        let currentCaptcha = "";
-        function makeCaptcha() {
+        // --- Hardcore Captcha Engine ---
+        let captchaText = "";
+        function initCaptcha() {
+            const canvas = document.getElementById('captchaCanvas');
+            const ctx = canvas.getContext('2d');
             const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-            currentCaptcha = "";
-            for (let i = 0; i < 6; i++) currentCaptcha += chars.charAt(Math.floor(Math.random() * chars.length));
-            document.getElementById('captcha-display').innerText = currentCaptcha;
+            captchaText = "";
+            
+            // Clear and Background
+            ctx.fillStyle = "#f1f5f9";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Add Noise Lines (Zinazuia AI kusoma herufi)
+            for(let i=0; i<15; i++) {
+                ctx.strokeStyle = `rgba(${Math.random()*255},${Math.random()*255},${Math.random()*255},0.3)`;
+                ctx.beginPath();
+                ctx.moveTo(Math.random()*canvas.width, Math.random()*canvas.height);
+                ctx.lineTo(Math.random()*canvas.width, Math.random()*canvas.height);
+                ctx.stroke();
+            }
+
+            // Generate Text
+            ctx.font = "bold 32px 'Courier New'";
+            for(let i=0; i<6; i++) {
+                const char = chars.charAt(Math.floor(Math.random() * chars.length));
+                captchaText += char;
+                ctx.save();
+                ctx.translate(30 + i*25, 45);
+                ctx.rotate((Math.random() - 0.5) * 0.4); // Tikisa herufi kidogo
+                ctx.fillStyle = "#1e3a8a";
+                ctx.fillText(char, 0, 0);
+                ctx.restore();
+            }
             document.getElementById('captcha-input').value = "";
         }
 
+        // --- UI Logic ---
+        function toggleView(type) {
+            const sForm = document.getElementById('studentRegisterForm');
+            const stForm = document.getElementById('staffLoginForm');
+            const sTab = document.getElementById('tab-student');
+            const stTab = document.getElementById('tab-staff');
+
+            if(type === 'student') {
+                sForm.classList.remove('hidden'); stForm.classList.add('hidden');
+                sTab.classList.add('active'); stTab.classList.remove('active');
+                stTab.classList.add('text-gray-500');
+            } else {
+                sForm.classList.add('hidden'); stForm.classList.remove('hidden');
+                stTab.classList.add('active'); sTab.classList.remove('active');
+                sTab.classList.add('text-gray-500');
+            }
+        }
+
         function togglePass(id) {
-            const field = document.getElementById(id);
-            field.type = field.type === 'password' ? 'text' : 'password';
+            const el = document.getElementById(id);
+            el.type = el.type === 'password' ? 'text' : 'password';
         }
 
         function generatePass() {
-            const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ0123456789!@#$%";
-            let pass = "";
-            for (let i = 0; i < 10; i++) pass += chars.charAt(Math.floor(Math.random() * chars.length));
-            document.getElementById('pass').value = pass;
-            document.getElementById('confirmPass').value = pass;
-            alert("AUTO-GENERATED: " + pass + "\nCopy this somewhere safe!");
+            const p = Math.random().toString(36).slice(-8).toUpperCase() + "!" + Math.floor(Math.random()*99);
+            document.getElementById('pass').value = p;
+            document.getElementById('confirmPass').value = p;
+            alert("SECURE PASSWORD: " + p + " (COPY IT!)");
         }
 
-        // --- Form Submission Logic ---
+        // --- Submission Logic ---
         document.getElementById('studentRegisterForm').onsubmit = async (e) => {
             e.preventDefault();
             
-            // 1. Captcha Check
-            if(document.getElementById('captcha-input').value.toUpperCase() !== currentCaptcha) {
-                alert("Robot Alert! Captcha is incorrect.");
-                makeCaptcha();
+            if(document.getElementById('captcha-input').value.toUpperCase() !== captchaText) {
+                alert("ROBOT DETECTED: Captcha code is incorrect!");
+                initCaptcha();
                 return;
             }
 
-            // 2. Password Check
-            const password = document.getElementById('pass').value;
-            if(password !== document.getElementById('confirmPass').value) {
+            if(document.getElementById('pass').value !== document.getElementById('confirmPass').value) {
                 alert("Passwords do not match!");
                 return;
             }
 
-            // 3. Register with Supabase Auth
             const email = document.getElementById('email').value;
-            const fullName = document.getElementById('fullName').value;
+            const password = document.getElementById('pass').value;
 
+            // Supabase Auth
             const { data, error } = await _supabase.auth.signUp({
                 email: email,
                 password: password,
-                options: { data: { full_name: fullName, role: 'student' } }
+                options: { data: { full_name: document.getElementById('fullName').value } }
             });
 
             if(error) {
-                alert("Error: " + error.message);
+                alert("Auth Error: " + error.message);
             } else {
-                // Save additional info to students_profile table
-                const { error: dbError } = await _supabase.from('students_profile').insert([{
+                // Insert Profile
+                const { error: dbErr } = await _supabase.from('students_profile').insert([{
                     id: data.user.id,
-                    full_name: fullName,
+                    full_name: document.getElementById('fullName').value,
                     ns_number: document.getElementById('regNumber').value,
                     course_name: document.getElementById('course').value,
                     whatsapp_number: document.getElementById('whatsapp').value,
-                    gender: document.querySelector('input[name="gender"]:checked')?.value
+                    gender: document.querySelector('input[name="gender"]:checked').value
                 }]);
 
-                if(dbError) alert("Data Error: " + dbError.message);
-                else alert("Success! Welcome to MIHSSO Portal.");
+                if(dbErr) alert("Database Error: " + dbErr.message);
+                else alert("REGISTRATION SUCCESSFUL! Redirecting to dashboard...");
             }
         };
 
-        // Run on load
-        window.onload = makeCaptcha;
+        window.onload = initCaptcha;
     </script>
 </body>
 </html>
-
